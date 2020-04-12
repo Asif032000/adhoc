@@ -12,3 +12,5 @@
  cp filefromuser.txt /home/new/Downloads             # file copied to account "new" from account "user"
  cp filefromnew.txt /home/user/Downloads             # file copied to account "user" from account "new"
  
+## task 4
+timeout 10 watch date
