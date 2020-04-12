@@ -3,5 +3,12 @@
  mkdir -p  a/{b/{d/{i/m/z,j/l/z},e/h/l/z},c/{f/h/l/z,g/k/l/z}}
  
  ## task 2
+ chmod -x /usr/bin/date
+ setfacl -m u:new:rwx /usr/bin/date
  
+ ## task 3
+ setfacl -m u:new:rwx /home/user/Downloads           #run as root
+ setfacl -m u:user:rwx /home/new/Downloads           #run as root
+ cp filefromuser.txt /home/new/Downloads             # file copied to account "new" from account "user"
+ cp filefromnew.txt /home/user/Downloads             # file copied to account "user" from account "new"
  
