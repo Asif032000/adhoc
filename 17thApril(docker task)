@@ -33,15 +33,20 @@ docker ps --format "{{.Names}}\t{{.CreatedAt}}" > file.txt
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 ## task 3
+# pull an image
+docker run -it --name firefoxos centos:7
 
+# install firefox in it
 
-# first load the firefoxos  image from the file i've attached firefoxos.tar
+docker exec firefoxos /bin/bash -c "yum install firefox"
 
-docker load -i firefoxos.tar
+#commit this container to create image
 
-#then run this command
+docker commit firefoxos firefoximage
 
-docker run -it -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=unix$DISPLAY firefoximage
+## then run this command
+
+docker run -it -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=unix$DISPLAY firefoximage firefox
 
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
