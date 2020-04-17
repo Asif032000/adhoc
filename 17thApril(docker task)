@@ -1,0 +1,50 @@
+##task 1:
+
+import os 
+
+for x in range(1,5):
+	if int(x)==1:
+		image = 'alpine'
+	elif int(x) == 2:
+		image = 'fedora'
+	elif int(x) == 3:
+		image = 'centos'
+	elif int(x) == 4:
+		image = 'java'
+	os.system('docker pull {}'.format(image))
+	for i in range(1,26):
+		
+		print('running {} container with image {}'.format((25*(x-1))+i,image))
+		if int(x) != 2:
+
+			os.system('docker run -dit --name adhocnw{} --restart always {} ping google.com'.format((25*(x-1))+i,image))
+
+		else:
+		
+			os.system('docker run -dit --name adhocnw{} --restart always {} '.format((25*(x-1))+i,image))
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+## task 2:
+
+docker ps --format "{{.Names}}\t{{.CreatedAt}}" > file.txt
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+## task 3
+
+
+# first load the firefoxos  image from the file i've attached firefoxos.tar
+
+docker load -i firefoxos.tar
+
+#then run this command
+
+docker run -it -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=unix$DISPLAY firefoximage
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+## task 4
+
+docker stats -a --no-stream --format "table{{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}" > emstats.txt
