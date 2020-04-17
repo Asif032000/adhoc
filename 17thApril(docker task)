@@ -1,4 +1,4 @@
-##task 1:
+##task 1:  creates 100 containers with each 25 running on images java, alpine, fedora , centos
 
 import os 
 
@@ -25,12 +25,13 @@ for x in range(1,5):
 
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-## task 2:
+## task 2: saving containers info (names and creation date)
 
 docker ps --format "{{.Names}}\t{{.CreatedAt}}" > file.txt
 
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+running firefox in container as parent command
 
 ## task 3
 # pull an image
@@ -50,6 +51,6 @@ docker run -it -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=unix$DISPLAY firefoxi
 
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-## task 4
+## task 4  :   saving docker stats ( name , cpu usage and memory usage)
 
 docker stats -a --no-stream --format "table{{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}" > emstats.txt
