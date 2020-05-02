@@ -1,0 +1,9 @@
+
+
+//task 2: 
+We can attach volume of base container with the docker container running using docker image:
+
+docker run -it  -v /var/run/docker.sock:/var/run/docker.sock docker
+
+thus from this container we can run docker commands.
+
