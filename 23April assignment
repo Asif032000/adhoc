@@ -10,7 +10,7 @@ thus from this container we can run docker commands.
 
 //task 4: run a container as a user other than root
 
-
+//create a user as follows in dockerfile image: 
 FROM ubuntu:14.04
 
 RUN export uid=1000 gid=1000 && \
@@ -25,3 +25,10 @@ USER asif
 ENV HOME /home/asif
 WORKDIR $HOME
 CMD /bin/bash
+
+// now create an image from this dockerfile and run a container
+
+docker build -t asif .
+docker run -it asif bash
+
+
