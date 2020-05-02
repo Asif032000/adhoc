@@ -7,3 +7,22 @@ docker run -it  -v /var/run/docker.sock:/var/run/docker.sock docker
 
 thus from this container we can run docker commands.
 
+
+//task 4: run a container as a user other than root
+FROM ubuntu:14.04
+
+RUN apt-get update
+
+# Replace 1000 with your user / group id
+RUN export uid=1000 gid=1000 && \
+    mkdir -p /home/abc && \
+    echo "abc:x:${uid}:${gid}:Abc,,,:/home/abc:/bin/bash" >> /etc/passwd && \
+    echo "abc:x:${uid}:" >> /etc/group && \
+    echo "abc ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/abc && \
+    chmod 0440 /etc/sudoers.d/abc && \
+    chown ${uid}:${gid} -R /home/abc
+
+USER abc
+ENV HOME /home/abc
+WORKDIR $HOME
+CMD /bin/bash
