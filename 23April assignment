@@ -9,20 +9,19 @@ thus from this container we can run docker commands.
 
 
 //task 4: run a container as a user other than root
+
+
 FROM ubuntu:14.04
 
-RUN apt-get update
-
-# Replace 1000 with your user / group id
 RUN export uid=1000 gid=1000 && \
-    mkdir -p /home/abc && \
-    echo "abc:x:${uid}:${gid}:Abc,,,:/home/abc:/bin/bash" >> /etc/passwd && \
-    echo "abc:x:${uid}:" >> /etc/group && \
-    echo "abc ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/abc && \
-    chmod 0440 /etc/sudoers.d/abc && \
-    chown ${uid}:${gid} -R /home/abc
+    mkdir -p /home/asif && \
+    echo "asif:x:${uid}:${gid}:Abc,,,:/home/asif:/bin/bash" >> /etc/passwd && \
+    echo "asif:x:${uid}:" >> /etc/group && \
+    echo "asif ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/asif && \
+    chmod 0440 /etc/sudoers.d/asif && \
+    chown ${uid}:${gid} -R /home/asif
 
-USER abc
-ENV HOME /home/abc
+USER asif
+ENV HOME /home/asif
 WORKDIR $HOME
 CMD /bin/bash
