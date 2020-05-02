@@ -1,14 +1,49 @@
 
 
-//task 2: 
+//////////////////////////////task 2: ///////////////////////////////////
 We can attach volume of base container with the docker container running using docker image:
 
 docker run -it  -v /var/run/docker.sock:/var/run/docker.sock docker
 
 thus from this container we can run docker commands.
 
+////////////////////////////////////task 3////////////////////////////////
+we can use git hooks to do so , everytime commiting the code after changing the index.html or other web file post-commit file will run.
+in one directory create Dockerfile, web(directory) and 
+run git init in it 
 
-//task 4: run a container as a user other than root
+Dockerfile:
+ from centos
+ maintainer asifhabib
+ run dnf install httpd -y
+ add web /var/www/html/
+ expose 80
+ entrypoint httpd -DFOREGROUND
+
+
+## then run these:
+
+docker build -t webser .
+docker run -dit -p 80:80 --name newweb webser
+
+
+## inside .git/hooks/
+
+mkdir post-commit
+chmod +x post-commit
+
+
+post-commit file:
+#!/bin/bash
+
+docker rm -f newweb
+docker build -t webser /root/Assignments/demo
+
+docker run -dit --name newweb  -p 80:80 webser
+
+
+
+////////////////////////////////task 4: run a container as a user other than root//////////////////////////
 
 //create a user as follows in dockerfile image: 
 FROM ubuntu:14.04
