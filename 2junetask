@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: dbpod
+  name: dbpod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dbpod
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: dbpod
+    spec:
+      containers:
+      - image: mongo
+        name: mongo
+        resources: {}
+status: {}
+
+
+
+
+
+kubectl create -f dbdeploy.yml -n asif
+deployment.apps/dbpod created
+
+
+kubectl expose deploy dbpod --type NodePort --port 27017 -n asif
+service/dbpod exposed
+
+
+kubectl get svc -n asif
+NAME    TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)           AGE
+dbpod   NodePort   10.106.219.13   <none>        27017:30174/TCP   19s
+
+
+
+
+kubectl get no -o wide
+NAME       STATUS   ROLES    AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE       KERNEL-VERSION     CONTAINER-RUNTIME
+minikube   Ready    master   45h   v1.18.2   172.17.0.5    <none>        Ubuntu 19.10   5.4.0-33-generic   docker://19.3.2
+
+
+
+
+
+//////////// from baseos terminal ////////////////
+
+mongo --host 172.17.0.5:30174
+MongoDB shell version v3.6.8
+connecting to: mongodb://172.17.0.5:30174/
+Implicit session: session { "id" : UUID("cc015ae4-215b-4161-a62e-ffd1fbfdb531") }
+MongoDB server version: 4.2.7
+WARNING: shell and server versions do not match
+Server has startup warnings: 
+2020-06-03T12:42:52.071+0000 I  STORAGE  [initandlisten] 
+2020-06-03T12:42:52.071+0000 I  STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+2020-06-03T12:42:52.071+0000 I  STORAGE  [initandlisten] **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+2020-06-03T12:42:53.279+0000 I  CONTROL  [initandlisten] 
+2020-06-03T12:42:53.279+0000 I  CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2020-06-03T12:42:53.279+0000 I  CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2020-06-03T12:42:53.279+0000 I  CONTROL  [initandlisten] 
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+
+
+
+
+> use k8s
+switched to db k8s
+> db.service.insert({id:8998, name:"webserver", ip:"188.223.32.44"})
+WriteResult({ "nInserted" : 1 })
+
+> show collections
+service
+
+> db.service.find()
+{ "_id" : ObjectId("5ed7ab5c9047fd931f2aa566"), "id" : 8998, "name" : "webserver", "ip" : "188.223.32.44" }
+
+
+> show dbs
+admin   0.000GB
+config  0.000GB
+k8s     0.000GB
+local   0.000GB
+newdb   0.000GB
+> 
