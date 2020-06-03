@@ -1,3 +1,5 @@
+/////////  dbdeploy.yml file:  ///////////////
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -24,23 +26,25 @@ spec:
 status: {}
 
 
-
+///////////////////// creating a deployment for db ///////////
 
 
 kubectl create -f dbdeploy.yml -n asif
 deployment.apps/dbpod created
 
+/////////////////////  exposing the deployment  ///////////////
 
 kubectl expose deploy dbpod --type NodePort --port 27017 -n asif
 service/dbpod exposed
 
+/////////////////////////  getting the service port ////////////
 
 kubectl get svc -n asif
 NAME    TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)           AGE
 dbpod   NodePort   10.106.219.13   <none>        27017:30174/TCP   19s
 
 
-
+///////////////////////// getting node ip //////////////////
 
 kubectl get no -o wide
 NAME       STATUS   ROLES    AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE       KERNEL-VERSION     CONTAINER-RUNTIME
@@ -50,7 +54,7 @@ minikube   Ready    master   45h   v1.18.2   172.17.0.5    <none>        Ubuntu 
 
 
 
-//////////// from baseos terminal ////////////////
+//////////// from baseos terminal ( connecting to db ) ////////////////
 
 mongo --host 172.17.0.5:30174
 MongoDB shell version v3.6.8
